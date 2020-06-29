@@ -30,3 +30,4 @@ node_modules/
 
 
 !/web_widgets/*/*.ctrl.js
+*.md.html
