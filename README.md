@@ -5,7 +5,7 @@
 ![bonita version](https://img.shields.io/badge/bonita-7.10.5-red)
 
 
-This repository contains an Bonita project example that hightlight how to implement task assignment in a workflow.
+This repository contains an Bonita project example that highlight how to implement task assignment in a workflow.
 
 ## Build 
 
