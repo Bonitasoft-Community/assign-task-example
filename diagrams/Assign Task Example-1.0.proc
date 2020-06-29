@@ -86,14 +86,14 @@
           <textAnnotationAttachment xmi:type="process:TextAnnotationAttachment" xmi:id="_Y-LqULlMEeqnyv3sPbxv2A" source="_Y-H_8LlMEeqnyv3sPbxv2A"/>
           <dynamicLabel xmi:type="expression:Expression" xmi:id="_K_XNwblGEeqhAMvAZ-hw_w" name="" content="" returnTypeFixed="true"/>
           <dynamicDescription xmi:type="expression:Expression" xmi:id="_K_XNwLlGEeqhAMvAZ-hw_w" name="Assign a pending task" content="Assign a pending task" returnTypeFixed="true"/>
-          <stepSummary xmi:type="expression:Expression" xmi:id="_K_XNwrlGEeqhAMvAZ-hw_w" name="descriptionAfterCompletion()" content="def identityAPI = apiAccessor.identityAPI&#xD;&#xA;def manager = identityAPI.getUser(taskAssigneeId)&#xD;&#xA;def newAssignee = identityAPI.getUser(userId.toLong())&#xD;&#xA;def reassignedTask = apiAccessor.processAPI.getHumanTaskInstance(taskId.toLong())&#xD;&#xA;&#xD;&#xA;&quot;$manager.userName has re-assigned '$reassignedTask.displayName' to $newAssignee.userName&quot;.toString()" interpreter="GROOVY" type="TYPE_READ_ONLY_SCRIPT" returnTypeFixed="true">
+          <stepSummary xmi:type="expression:Expression" xmi:id="_K_XNwrlGEeqhAMvAZ-hw_w" name="descriptionAfterCompletion()" content="def identityAPI = apiAccessor.identityAPI&#xD;&#xA;def manager = identityAPI.getUser(taskAssigneeId)&#xD;&#xA;def newAssignee = userId ? identityAPI.getUser(userId.toLong()) : null&#xD;&#xA;def reassignedTask = apiAccessor.processAPI.getHumanTaskInstance(taskId.toLong())&#xD;&#xA;&#xD;&#xA;newAssignee ? &quot;$manager.userName has assigned '$reassignedTask.displayName' to $newAssignee.userName&quot;.toString() : &quot;$manager.userName has unassigned '$reassignedTask.displayName'&quot;.toString()" interpreter="GROOVY" type="TYPE_READ_ONLY_SCRIPT" returnTypeFixed="true">
+            <referencedElements xmi:type="process:ContractInput" xmi:id="_bqct8LnpEeqOV-74D9E54Q" name="taskId" description="The task id of the task of the current case to reassign">
+              <mapping xmi:type="process:ContractInputMapping" xmi:id="_bqct8bnpEeqOV-74D9E54Q"/>
+            </referencedElements>
             <referencedElements xmi:type="expression:Expression" xmi:id="_hwqFMLlPEeqnyv3sPbxv2A" name="apiAccessor" content="apiAccessor" type="TYPE_ENGINE_CONSTANT" returnType="org.bonitasoft.engine.api.APIAccessor"/>
             <referencedElements xmi:type="expression:Expression" xmi:id="_hwqFMblPEeqnyv3sPbxv2A" name="taskAssigneeId" content="taskAssigneeId" type="TYPE_ENGINE_CONSTANT" returnType="java.lang.Long"/>
             <referencedElements xmi:type="process:ContractInput" xmi:id="_hwqFMrlPEeqnyv3sPbxv2A" name="userId" description="The user id of the new task assignee">
               <mapping xmi:type="process:ContractInputMapping" xmi:id="_hwqFM7lPEeqnyv3sPbxv2A"/>
-            </referencedElements>
-            <referencedElements xmi:type="process:ContractInput" xmi:id="_hwqFNLlPEeqnyv3sPbxv2A" name="taskId" description="The task id of the task of the current case to reassign">
-              <mapping xmi:type="process:ContractInputMapping" xmi:id="_hwqFNblPEeqnyv3sPbxv2A"/>
             </referencedElements>
           </stepSummary>
           <connectors xmi:type="process:Connector" xmi:id="_DElywLlKEeqhAMvAZ-hw_w" name="assignTask" definitionId="scripting-groovy-script" event="ON_FINISH" definitionVersion="1.0.1">
@@ -103,13 +103,13 @@
               </parameters>
               <parameters xmi:type="connectorconfiguration:ConnectorParameter" xmi:id="_DElyxLlKEeqhAMvAZ-hw_w" key="variables"/>
               <parameters xmi:type="connectorconfiguration:ConnectorParameter" xmi:id="_DElyxblKEeqhAMvAZ-hw_w" key="fakeScriptExpression">
-                <expression xmi:type="expression:Expression" xmi:id="_DElyxrlKEeqhAMvAZ-hw_w" name="assignTask" content="apiAccessor.processAPI.assignUserTask(taskId.toLong(), userId.toLong())" interpreter="GROOVY" type="TYPE_READ_ONLY_SCRIPT" returnType="java.lang.Object" returnTypeFixed="true">
-                  <referencedElements xmi:type="expression:Expression" xmi:id="_DElyx7lKEeqhAMvAZ-hw_w" name="apiAccessor" content="apiAccessor" type="TYPE_ENGINE_CONSTANT" returnType="org.bonitasoft.engine.api.APIAccessor"/>
-                  <referencedElements xmi:type="process:ContractInput" xmi:id="_DElyyLlKEeqhAMvAZ-hw_w" name="userId" description="The user id of the new task assignee">
-                    <mapping xmi:type="process:ContractInputMapping" xmi:id="_DElyyblKEeqhAMvAZ-hw_w"/>
+                <expression xmi:type="expression:Expression" xmi:id="_DElyxrlKEeqhAMvAZ-hw_w" name="assignTask" content="if(userId){&#xD;&#xA;&#x9;apiAccessor.processAPI.assignUserTask(taskId.toLong(), userId.toLong())&#xD;&#xA;}else{&#xD;&#xA;&#x9;apiAccessor.processAPI.releaseUserTask(taskId.toLong())&#xD;&#xA;}" interpreter="GROOVY" type="TYPE_READ_ONLY_SCRIPT" returnType="java.lang.Object" returnTypeFixed="true">
+                  <referencedElements xmi:type="expression:Expression" xmi:id="_HEYo4LnpEeqOV-74D9E54Q" name="apiAccessor" content="apiAccessor" type="TYPE_ENGINE_CONSTANT" returnType="org.bonitasoft.engine.api.APIAccessor"/>
+                  <referencedElements xmi:type="process:ContractInput" xmi:id="_HEYo4bnpEeqOV-74D9E54Q" name="userId" description="The user id of the new task assignee">
+                    <mapping xmi:type="process:ContractInputMapping" xmi:id="_HEYo4rnpEeqOV-74D9E54Q"/>
                   </referencedElements>
-                  <referencedElements xmi:type="process:ContractInput" xmi:id="_DElyyrlKEeqhAMvAZ-hw_w" name="taskId" description="The task id of the task of the current case to reassign">
-                    <mapping xmi:type="process:ContractInputMapping" xmi:id="_DElyy7lKEeqhAMvAZ-hw_w"/>
+                  <referencedElements xmi:type="process:ContractInput" xmi:id="_HEYo47npEeqOV-74D9E54Q" name="taskId" description="The task id of the task of the current case to reassign">
+                    <mapping xmi:type="process:ContractInputMapping" xmi:id="_HEYo5LnpEeqOV-74D9E54Q"/>
                   </referencedElements>
                 </expression>
               </parameters>
@@ -130,7 +130,7 @@
             <inputs xmi:type="process:ContractInput" xmi:id="_Ych9gLlGEeqhAMvAZ-hw_w" name="taskId" description="The task id of the task of the current case to reassign">
               <mapping xmi:type="process:ContractInputMapping" xmi:id="_Ych9gblGEeqhAMvAZ-hw_w"/>
             </inputs>
-            <constraints xmi:type="process:ContractConstraint" xmi:id="_Nd8zQLlKEeqhAMvAZ-hw_w" expression="try{&#xD;&#xA;&#x9;userId.toLong()&#xD;&#xA;&#x9;return true&#xD;&#xA;}catch(NumberFormatException e){&#xD;&#xA;&#x9;return false&#xD;&#xA;}" errorMessage="userId is not a long value" name="userIdMustBeALong">
+            <constraints xmi:type="process:ContractConstraint" xmi:id="_Nd8zQLlKEeqhAMvAZ-hw_w" expression="if(userId){&#xD;&#xA;&#x9;try{&#xD;&#xA;&#x9;&#x9;userId.toLong()&#xD;&#xA;&#x9;&#x9;return true&#xD;&#xA;&#x9;}catch(NumberFormatException e){&#xD;&#xA;&#x9;&#x9;return false&#xD;&#xA;&#x9;}&#xD;&#xA;}else{&#xD;&#xA;&#x9;return true&#xD;&#xA;}" errorMessage="userId is not a long value" name="userIdMustBeALong">
               <inputNames>userId</inputNames>
             </constraints>
             <constraints xmi:type="process:ContractConstraint" xmi:id="_dqMYYLlKEeqhAMvAZ-hw_w" expression="try{&#xD;&#xA;&#x9;taskId.toLong()&#xD;&#xA;&#x9;return true&#xD;&#xA;}catch(NumberFormatException e){&#xD;&#xA;&#x9;return false&#xD;&#xA;}" errorMessage="taskId is not a long value" name="taskIdMustBeALong">
@@ -139,7 +139,7 @@
           </contract>
           <expectedDuration xmi:type="expression:Expression" xmi:id="_K_XNy7lGEeqhAMvAZ-hw_w" name="" content="" returnType="java.lang.Long" returnTypeFixed="true"/>
         </elements>
-        <elements xmi:type="process:TextAnnotation" xmi:id="_Y-H_8LlMEeqnyv3sPbxv2A" text="* Only managers can reassign tasks&#xD;&#xA;* Assign task can be execute n times during the case lifecyle&#xD;&#xA;* For this example, helen.kelly is a manager, manager is role in the organization and it's mapped to the Manager actor&#xD;&#xA;* You can use the case overview to track the re-assignments that occurs for a case"/>
+        <elements xmi:type="process:TextAnnotation" xmi:id="_Y-H_8LlMEeqnyv3sPbxv2A" text="* Only managers can reassign tasks&#xD;&#xA;* Assign task can be execute n times during the case lifecyle&#xD;&#xA;* For this example, helen.kelly is a manager, manager is role in the organization and it's mapped to the Manager actor&#xD;&#xA;* You can use the case overview to track the tasks assignments that occurs for a case"/>
       </elements>
       <formMapping xmi:type="process:FormMapping" xmi:id="_65LNZLlFEeqhAMvAZ-hw_w" type="NONE">
         <targetForm xmi:type="expression:Expression" xmi:id="_DlrtoLlKEeqhAMvAZ-hw_w" name="" content="" type="FORM_REFERENCE_TYPE" returnTypeFixed="true"/>

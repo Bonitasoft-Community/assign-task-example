@@ -2,7 +2,7 @@
   "designerVersion" : "1.10.60",
   "id" : "AssignForm",
   "name" : "AssignForm",
-  "lastUpdate" : 1593359125881,
+  "lastUpdate" : 1593422822447,
   "rows" : [
     [
       {
@@ -163,7 +163,7 @@
               {
                 "type" : "component",
                 "dimension" : {
-                  "xs" : 12
+                  "xs" : 9
                 },
                 "propertyValues" : {
                   "cssClasses" : {
@@ -222,13 +222,99 @@
                 "reference" : "a283c712-cbfa-4ef5-9d7c-3dd47ac20793",
                 "hasValidationError" : false,
                 "id" : "pbSelect"
+              },
+              {
+                "type" : "component",
+                "dimension" : {
+                  "xs" : 3
+                },
+                "propertyValues" : {
+                  "cssClasses" : {
+                    "type" : "constant",
+                    "value" : "mt-25"
+                  },
+                  "hidden" : {
+                    "type" : "constant",
+                    "value" : false
+                  },
+                  "disabled" : {
+                    "type" : "expression",
+                    "value" : "!selectedTask.assigned_id"
+                  },
+                  "label" : {
+                    "type" : "interpolation",
+                    "value" : "Unassign {{selectedTask.displayName}}"
+                  },
+                  "alignment" : {
+                    "type" : "constant",
+                    "value" : "left"
+                  },
+                  "buttonStyle" : {
+                    "type" : "constant",
+                    "value" : "default"
+                  },
+                  "action" : {
+                    "type" : "constant",
+                    "value" : "Submit task"
+                  },
+                  "assign" : {
+                    "type" : "constant",
+                    "value" : false
+                  },
+                  "url" : {
+                    "type" : "interpolation"
+                  },
+                  "responseStatusCode" : {
+                    "type" : "variable",
+                    "value" : ""
+                  },
+                  "dataToSend" : {
+                    "type" : "expression",
+                    "value" : "unassignOutput"
+                  },
+                  "dataFromSuccess" : {
+                    "type" : "variable",
+                    "value" : ""
+                  },
+                  "closeOnSuccess" : {
+                    "type" : "constant",
+                    "value" : false
+                  },
+                  "dataFromError" : {
+                    "type" : "variable",
+                    "value" : ""
+                  },
+                  "targetUrlOnSuccess" : {
+                    "type" : "interpolation"
+                  },
+                  "collectionToModify" : {
+                    "type" : "variable"
+                  },
+                  "modalId" : {
+                    "type" : "constant",
+                    "value" : ""
+                  },
+                  "collectionPosition" : {
+                    "type" : "constant",
+                    "value" : "Last"
+                  },
+                  "valueToAdd" : {
+                    "type" : "constant"
+                  },
+                  "removeItem" : {
+                    "type" : "variable"
+                  }
+                },
+                "reference" : "b1c3422c-9c9d-411c-a6e2-2e3fc3e29212",
+                "hasValidationError" : false,
+                "id" : "pbButton"
               }
             ],
             [
               {
                 "type" : "component",
                 "dimension" : {
-                  "xs" : 12
+                  "xs" : 9
                 },
                 "propertyValues" : {
                   "cssClasses" : {
@@ -273,7 +359,7 @@
                   },
                   "displayedKey" : {
                     "type" : "constant",
-                    "value" : "username"
+                    "value" : "userName"
                   },
                   "returnedKey" : {
                     "type" : "constant",
@@ -287,13 +373,11 @@
                 "reference" : "e18ee472-44b4-4daa-b4eb-caba95dd1eca",
                 "hasValidationError" : false,
                 "id" : "pbSelect"
-              }
-            ],
-            [
+              },
               {
                 "type" : "component",
                 "dimension" : {
-                  "xs" : 12
+                  "xs" : 3
                 },
                 "propertyValues" : {
                   "removeItem" : {
@@ -305,7 +389,7 @@
                   },
                   "cssClasses" : {
                     "type" : "constant",
-                    "value" : ""
+                    "value" : "mt-25"
                   },
                   "widgetId" : {
                     "type" : "constant",
@@ -321,11 +405,11 @@
                   },
                   "label" : {
                     "type" : "interpolation",
-                    "value" : "Assign {{selectedTask.displayName}} to {{selectedUser.username}}"
+                    "value" : "Assign {{selectedTask.displayName}} {{selectedUser.userName ? ' to ' + selectedUser.userName : ''}}"
                   },
                   "dataToSend" : {
                     "type" : "expression",
-                    "value" : "formOutput"
+                    "value" : "assignOutput"
                   },
                   "dataFromError" : {
                     "type" : "variable",
@@ -340,7 +424,7 @@
                   },
                   "targetUrlOnSuccess" : {
                     "type" : "interpolation",
-                    "value" : "/bonita"
+                    "value" : ".."
                   },
                   "action" : {
                     "type" : "constant",
@@ -358,7 +442,7 @@
                   },
                   "alignment" : {
                     "type" : "constant",
-                    "value" : "center"
+                    "value" : "left"
                   },
                   "class" : {
                     "type" : "constant",
@@ -495,16 +579,6 @@
       ],
       "exposed" : false
     },
-    "formOutput" : {
-      "type" : "expression",
-      "value" : [
-        "return {",
-        "\tuserId: $data.selectedUser.id,",
-        "\ttaskId: $data.selectedTask.id",
-        "}"
-      ],
-      "exposed" : false
-    },
     "context" : {
       "type" : "url",
       "value" : [
@@ -586,6 +660,26 @@
         "    return $data.taskCandidates.filter(c => c.id !== Number($data.selectedTask.assigned_id.id))",
         "}else if($data.taskCandidates){",
         "    return $data.taskCandidates",
+        "}"
+      ],
+      "exposed" : false
+    },
+    "unassignOutput" : {
+      "type" : "expression",
+      "value" : [
+        "return {",
+        "\tuserId: null,",
+        "\ttaskId: $data.selectedTask.id",
+        "}"
+      ],
+      "exposed" : false
+    },
+    "assignOutput" : {
+      "type" : "expression",
+      "value" : [
+        "return {",
+        "\tuserId: $data.selectedUser.id,",
+        "\ttaskId: $data.selectedTask.id",
         "}"
       ],
       "exposed" : false
