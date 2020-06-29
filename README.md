@@ -1,7 +1,7 @@
 # Assign Task Example
 
 ![](https://github.com/Bonitasoft-Community/assign-task-example/workflows/Build/badge.svg)
-[![GitHub version](https://badge.fury.io/gh/Bonitasoft-Community%2assign-task-example.svg)](https://badge.fury.io/gh/Bonitasoft-Community%2Fassign-task-example)
+[![GitHub version](https://badge.fury.io/gh/Bonitasoft-Community%2Fassign-task-example.svg)](https://badge.fury.io/gh/Bonitasoft-Community%2Fassign-task-example)
 ![bonita version](https://img.shields.io/badge/bonita-7.10.5-red)
 
 
