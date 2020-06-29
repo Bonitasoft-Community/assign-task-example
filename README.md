@@ -1,6 +1,8 @@
 # Assign Task Example
 
-![](https://github.com/Bonitasoft-Community/task-candidates-rest-api/workflows/Build/badge.svg)
+![](https://github.com/Bonitasoft-Community/assign-task-example/workflows/Build/badge.svg)
+[![GitHub version](https://badge.fury.io/gh/Bonitasoft-Community%2assign-task-example.svg)](https://badge.fury.io/gh/Bonitasoft-Community%2Fassign-task-example)
+
 
 This repository contains an Bonita project example that hightlight how to implement task assignment in a workflow.
 
